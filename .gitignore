@@ -18,7 +18,7 @@
 *.so
 *.a
 *.exe
-tensor_engine  # (Assuming this is what you name your compiled engine)
+tensor_engine
 athena         # Athena++ compiled executable
 athena_bin/    # If you build Athena into a specific directory
 
