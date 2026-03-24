@@ -4,6 +4,4 @@ This repository focuses on building a custom tensor-analysis engine (using C + M
 This project is part of the High Performance Computing (CS-4/6373) course at the University of Tulsa during the Spring 2026 semester.
 
 ## Authors
-Juniper-Marie Rahal
-Isa Fite
-Cameron Walker
+Juniper-Marie Rahal, Isa Fite, Cameron Walker
