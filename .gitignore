@@ -1,0 +1,46 @@
+# ==========================================
+# 1. Athena++ & Simulation Data (CRITICAL)
+# ==========================================
+# Never commit raw simulation data or Athena artifacts
+*.athdf
+*.rst
+*.hst
+*.tab
+*.out
+*.hdf5
+*.h5
+
+# ==========================================
+# 2. C & MPI Build Artifacts
+# ==========================================
+# Ignore compiled object files and binaries
+*.o
+*.so
+*.a
+*.exe
+tensor_engine  # (Assuming this is what you name your compiled engine)
+athena         # Athena++ compiled executable
+athena_bin/    # If you build Athena into a specific directory
+
+# ==========================================
+# 3. Python & Virtual Environments
+# ==========================================
+# Ignore Python cache and local environments
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.env
+
+# ==========================================
+# 4. OS & Editor Specific
+# ==========================================
+# Ignore system and IDE files
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
