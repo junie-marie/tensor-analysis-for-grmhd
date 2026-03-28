@@ -25,7 +25,7 @@ int main(int argc, char **argv) {
 
     // 2. TODO: Implement Parallel HDF5 Input
     // - Define MPI-IO access property lists
-    // - Open the Athena++ .athdf file collaboratively
+    // - Open the Athena++ .athdf file
     // - Read the local chunk of the 2D grid (density, pressure, velocity, B-field)
     
     // Barrier to ensure all ranks finish reading before math begins

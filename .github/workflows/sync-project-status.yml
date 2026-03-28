@@ -1,0 +1,26 @@
+name: Sync Label to Project Status
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  update_project:
+    runs-on: ubuntu-latest
+    # The fix: Wrapping the evaluation in expression brackets
+    if: ${{ github.event.label.name == 'Status: Todo' }}
+    
+    steps:
+      - name: Update Project V2 Item Status
+        env:
+          GITHUB_TOKEN: ${{ secrets.PROJECT_AUTOMATION_TOKEN }}
+          PROJECT_ID: "PVT_kwHOBBsONs4BTFNH"
+          STATUS_FIELD_ID: "PVTSSF_lAHOBBsONs4BTFNHzhAbVtg"
+          TODO_OPTION_ID: "f75ad846"
+          ISSUE_NODE_ID: ${{ github.event.issue.node_id }}
+        
+        run: |
+          gh project item-edit --id "$ISSUE_NODE_ID" \
+            --project-id "$PROJECT_ID" \
+            --field-id "$STATUS_FIELD_ID" \
+            --single-select-option-id "$TODO_OPTION_ID"
