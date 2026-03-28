@@ -16,19 +16,27 @@ flowchart LR
         B --> C[(HDF5 Datasets)]
     end
 
-    subgraph Phase2 [Phase 2: SPMD Engine]
-        direction TD
-        D[MPI Partitioning] --> E[Local Tensor Math]
+    subgraph Validation [Phase 2: Python Ground Truth]
+        P1[h5py Extraction] --> P2[Reference Tensors]
+    end
+
+    subgraph Phase3 [Phase 3: SPMD Engine]
+        D[MPI-IO Partitioning] --> E[C+MPI Tensor Math]
         E --> F[Global Reductions]
         F --> G[Final Metrics & Plots]
     end
 
-    %% The Bridge
-    C -->|MPI-IO Read| D
+    %% Data Flow Connections
+    C -->|Read Dummy Data| P1
+    C -->|Parallel Read| D
+    
+    %% Validation Connection (Dotted Line)
+    P2 -.->|Validates Math| E
 
     %% Styling
     style A fill:#630094,stroke:#333,stroke-width:2px
     style C fill:#13148c,stroke:#333,stroke-width:2px
+    style P2 fill:#a80096,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5
     style G fill:#167600,stroke:#333,stroke-width:2px
 ```
 
