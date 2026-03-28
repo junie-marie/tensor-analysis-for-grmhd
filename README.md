@@ -10,27 +10,26 @@ Juniper-Marie Rahal, Isa Fite, Cameron Walker
 ## System Architecture
 
 ```mermaid
-graph TD
-    subgraph Phase1 [Phase 1: Relativistic Jet Simulation]
-        A[Athena++ Solver] -->|MPI Domain Decomposition| B(Fluid Variable Evolution)
-        B -->|Parallel HDF5 Output| C[(HDF5 Datasets)]
+flowchart LR
+    subgraph Phase1 [Phase 1: Simulation]
+        A[Athena++ Solver] --> B(Fluid Evolution)
+        B --> C[(HDF5 Datasets)]
     end
-    
-    style A fill:#620693,stroke:#333,stroke-width:2px
-    style C fill:#170693,stroke:#333,stroke-width:2px
-```
 
-```mermaid
-graph LR
-    C[(HDF5 Datasets)] -->|MPI-IO Parallel Read| D
-    subgraph Phase2 [Phase 2: SPMD Tensor Analysis Engine]
-        D[Data Partitioning across MPI Ranks] --> E[Local Computations: Stress-Energy Tensor, Lorentz Factor]
-        E -->|MPI_Reduce / MPI_Allreduce| F[Global Reductions & Aggregation]
-        F --> G[Final Metrics, Scaling Data, & Visualizations]
+    subgraph Phase2 [Phase 2: SPMD Engine]
+        direction TD
+        D[MPI Partitioning] --> E[Local Tensor Math]
+        E --> F[Global Reductions]
+        F --> G[Final Metrics & Plots]
     end
-    
-    style C fill:#170693,stroke:#333,stroke-width:2px
-    style G fill:#066293,stroke:#333,stroke-width:2px
+
+    %% The Bridge
+    C -->|MPI-IO Read| D
+
+    %% Styling
+    style A fill:#630094,stroke:#333,stroke-width:2px
+    style C fill:#13148c,stroke:#333,stroke-width:2px
+    style G fill:#167600,stroke:#333,stroke-width:2px
 ```
 
 ## Prerequisites
