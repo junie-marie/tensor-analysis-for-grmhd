@@ -19,6 +19,9 @@
 tensor_engine
 athena         # Athena++ compiled executable
 athena_bin/    # If you build Athena into a specific directory
+athena/
+athena/.gitignore
+*~athena/
 
 # ==========================================
 # 3. Python & Virtual Environments
@@ -41,4 +44,3 @@ env/
 .idea/
 *.swp
 *.swo
-*~athena/
