@@ -1,0 +1,25 @@
+name: C+MPI Build Check
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build_engine:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Install MPI and HDF5 Dependencies
+        # Installs the parallel I/O and communication libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openmpi-bin libopenmpi-dev libhdf5-mpi-dev
+          
+      - name: Compile Engine
+        # This assumes we are about to write a Makefile for Phase 1!
+        run: make
