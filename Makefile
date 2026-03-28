@@ -20,7 +20,7 @@ LIBS = -lhdf5
 
 # Project Structure
 SRC_DIR = src
-SRCS = $(SRC_DIR)/tensor_analysis.c
+SRCS = $(SRC_DIR)/tensor_engine.c
 TARGET = tensor_engine
 
 # ------------------------------------------
