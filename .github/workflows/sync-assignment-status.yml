@@ -1,0 +1,29 @@
+name: Sync Assignment to In Progress
+
+on:
+  issues:
+    # This triggers the moment you or a collaborator is assigned
+    types: [assigned]
+
+jobs:
+  update_project:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Update Project V2 Item Status
+        env:
+          GITHUB_TOKEN: ${{ secrets.PROJECT_AUTOMATION_TOKEN }}
+          # These two IDs stay the same
+          PROJECT_ID: "PVT_kwHOBBsONs4BTFNH"
+          STATUS_FIELD_ID: "PVTSSF_lAHOBBsONs4BTFNHzhAbVtg"
+          
+          # Replace this with your specific "In Progress" Option ID from Step 1
+          IN_PROGRESS_OPTION_ID: "47fc9ee4"
+          
+          ISSUE_NODE_ID: ${{ github.event.issue.node_id }}
+        
+        run: |
+          gh project item-edit --id "$ISSUE_NODE_ID" \
+            --project-id "$PROJECT_ID" \
+            --field-id "$STATUS_FIELD_ID" \
+            --single-select-option-id "$IN_PROGRESS_OPTION_ID"
