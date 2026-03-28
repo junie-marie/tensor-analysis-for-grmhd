@@ -20,6 +20,15 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y openmpi-bin libopenmpi-dev libhdf5-mpi-dev
           
+      - name: Debug - List Repository Contents
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "Root contents:"
+          ls -la
+          echo "Src directory contents:"
+          ls -la src/ || echo "WARNING: src directory not found!"
+          
       - name: Compile Engine
         # This assumes we are about to write a Makefile for Phase 1!
         run: make
