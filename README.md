@@ -13,31 +13,41 @@ Juniper-Marie Rahal, Isa Fite, Cameron Walker
 flowchart LR
     subgraph Phase1 [Phase 1: Simulation]
         A[Athena++ Solver] --> B(Fluid Evolution)
-        B --> C[(HDF5 Datasets)]
+        B --> C[(HDF5 Conserved Datasets)]
     end
 
     subgraph Validation [Phase 2: Python Ground Truth]
-        P1[h5py Extraction] --> P2[Reference Tensors]
+        P1[h5py Extraction] --> P2[Root-Finding: Primitive Recovery]
+        P2 --> P3[Reference Tensors & Math]
     end
 
-    subgraph Phase3 [Phase 3: SPMD Engine]
-        D[MPI-IO Partitioning] --> E[C+MPI Tensor Math]
-        E --> F[Global Reductions]
-        F --> G[Final Metrics & Plots]
+    subgraph Phase3 [Phase 3: SPMD C+MPI Engine]
+        D[MPI-IO Partitioning] --> E[Newton-Raphson: Primitive Recovery]
+        E --> F[C+MPI Tensor Math]
+        F --> G[Global MPI Reductions]
+        G --> H[(Output: Tensor Datasets & Metrics)]
+    end
+    
+    subgraph Phase4 [Phase 4: Visualizations]
+        V1[Python / ParaView] --> V2[Heatmaps & Vector Fields]
+        V1 --> V3[Scaling & Efficiency Plots]
     end
 
     %% Data Flow Connections
     C -->|Read Dummy Data| P1
     C -->|Parallel Read| D
+    H -->|Read Results| V1
     
     %% Validation Connection (Dotted Line)
-    P2 -.->|Validates Math| E
+    P3 -.->|Validates Math via Unit Tests| F
 
     %% Styling
-    style A fill:#630094,stroke:#333,stroke-width:2px
-    style C fill:#13148c,stroke:#333,stroke-width:2px
-    style P2 fill:#a80096,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5
-    style G fill:#167600,stroke:#333,stroke-width:2px
+    style A fill:#630094,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#13148c,stroke:#333,stroke-width:2px,color:#fff
+    style H fill:#13148c,stroke:#333,stroke-width:2px,color:#fff
+    style P3 fill:#a80096,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5,color:#fff
+    style V2 fill:#167600,stroke:#333,stroke-width:2px,color:#fff
+    style V3 fill:#167600,stroke:#333,stroke-width:2px,color:#fff
 ```
 
 ## Prerequisites
