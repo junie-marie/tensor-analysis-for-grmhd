@@ -19,21 +19,26 @@ LDFLAGS = -L/usr/lib/x86_64-linux-gnu/hdf5/openmpi
 LIBS = -lhdf5
 
 # Project Structure
-SRC_DIR = src
-SRCS = $(SRC_DIR)/tensor_engine.c
+SRCS = main.c io_grid.c rmhd_physics.c
+OBJS = $(SRCS:.c=.o)
 TARGET = tensor_engine
 
 # ------------------------------------------
 # Build Rules
 # ------------------------------------------
 
-# The default rule that runs when you type 'make'
+# The default rule
 all: $(TARGET)
 
-# The compilation rule
-$(TARGET): $(SRCS)
-	$(CC) $(CFLAGS) $(INCLUDES) $(SRCS) -o $(TARGET) $(LDFLAGS) $(LIBS)
+# The linking rule: Combines all .o files into the final executable
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(TARGET) $(LDFLAGS) $(LIBS)
 
-# The clean rule to wipe the compiled binary (run with 'make clean')
+# The compilation rule: Compiles each .c file into a .o object file
+# $< is the input (.c file), $@ is the output (.o file)
+%.o: %.c
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+# Clean rule to wipe compiled binaries and object files
 clean:
-	rm -f $(TARGET)
+	rm -f $(OBJS) $(TARGET)
