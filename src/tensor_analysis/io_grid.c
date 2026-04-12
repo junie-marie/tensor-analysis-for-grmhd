@@ -45,7 +45,11 @@ hid_t open_hdf5_parallel(const char *filename, MPI_Comm cart_comm, MPI_Info info
 // ---------------------------------------------------------
 // 3. PHDF5 Chunk Reading
 // ---------------------------------------------------------
-herr_t read_hdf5_chunk(hid_t file_id, const char *dataset_name, const Domain2D *domain, double *local_data_buffer) {
+herr_t read_hdf5_chunk(hid_t file_id, const char *dataset_name,
+                        const Domain2D *domain, double *local_data_buffer) {
     // TODO - Junie
+    // Use 'H5Sselect_hyperslab' to have each MPI rank read its
+    // specific 100x100 block of the conserved variables,
+    // ($D, M, E$), and the magnetic field ($B$)
     return;
 }
