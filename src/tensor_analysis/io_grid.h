@@ -21,6 +21,6 @@ typedef struct {
 // --- FUNCTION DECLARATIONS ---
 void partition_2d_grid(Domain2D *domain, int my_rank, int num_ranks);
 hid_t open_hdf5_parallel(const char *filename, MPI_Comm cart_comm, MPI_Info info);
-herr_t read_hdf5_chunk(hid_t file_id, const char *dataset_name, const Domain2D *domain, double *local_data_buffer);
+herr_t read_hdf5_chunk(hid_t file_id, const char *dataset_name, int var_index, const Domain2D *domain, double *local_data_buffer);
 
 #endif // IO_GRID_H
